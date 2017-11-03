@@ -1,0 +1,114 @@
+﻿<div class="bg" ng-controller="contraseniaController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="mensaje-estandar text-center">
+                <h3>Cambio de contraseña</h3>
+            </div>
+        </div>
+
+
+
+        <form name="frmCambio" novalidate class="form-horizontal form-standar" ng-submit="vm.cambiaContrasenia(frmCambio.$valid)" role="form">
+
+            <div class="row">
+
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="content-unit cambio-contrasena">
+                        <div class="form-group" ng-class="{'has-error has-feedback' : frmCambio.ContraseniaActual.$invalid && frmCambio.$submitted}">
+                            <label class="col-md-5 control-label">Contraseña actual:</label>
+                            <div class="col-md-7">
+                                <input type="password" class="form-control" maxlength="20" required ng-model="vm.userCambio.passwordActual" name="ContraseniaActual" id="ContraseniaActual" ng-minlength="8" ng-maxlength="20" autocomplete="off" />
+                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmCambio.ContraseniaActual.$invalid && frmCambio.$submitted"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error has-feedback' : frmCambio.ContraseniaNueva.$invalid && frmCambio.$submitted}">
+                            <label class="col-md-5 control-label">Nueva contraseña:</label>
+                            <div class="col-md-7">
+                                <input type="password" class="form-control" maxlength="20" required ng-model="vm.userCambio.passwordNuevo" name="ContraseniaNueva" id="ContraseniaNueva" ng-minlength="8" ng-maxlength="20" autocomplete="off" />
+                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmCambio.ContraseniaNueva.$invalid && frmCambio.$submitted"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error has-feedback' : frmCambio.ContraseniaRepetir.$invalid && frmCambio.$submitted}">
+                            <label class="col-md-5 control-label">Repetir contraseña:</label>
+                            <div class="col-md-7">
+                                <input type="password" class="form-control" maxlength="20" required ng-model="vm.userCambio.passwordRepite" name="ContraseniaRepetir" id="ContraseniaRepetir" ng-minlength="8" ng-maxlength="20" autocomplete="off" />
+                                <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmCambio.ContraseniaRepetir.$invalid && frmCambio.$submitted"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group text-center">
+                            <div class="checkbox">
+                                <label class="control-label">
+                                    <input type="checkbox" id="mostraContraseñas"> Mostrar contraseñas
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="zona-baja">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-6">
+                        <hr>
+                        <p>
+                            Para realizar el cambio de contraseña es necesario una verificación, por favor de click en "Solicitar código" y le <strong>llegará un SMS,</strong> luego ingrese ese código y proceda a cambiar su contraseña.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="zona-baja">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary btn-lg" ng-click="vm.enviaCodigo()"><span class="fa fa-phone"></span> Solicitar código</button>
+                            <h4 class="text-center">Ingresa tu PIN de seguridad</h4>
+
+                            <div class="form-group" ng-class="{'has-error has-feedback' : frmCambio.codigo.$invalid && frmCambio.$submitted}">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input type="text" name="codigo" class="form-control text-center" autofocus required autocomplete="off" maxlength="4" ng-model="vm.CodigoPermiso" ng-minlength="4" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-offset-3 col-md-3 ">
+                    <p>
+                        <button type="button" class="btn btn-danger btn-lg btn-block" ui-sref="dashboard" ui-sref-active="active"><span class="fa fa-arrow-left"></span> Volver a la bandeja</button>
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block"><span class="fa fa-check"></span> Cambiar contraseña</button>
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+
+    $('#mostraContraseñas').on('change', function (event) {
+        if ($('#mostraContraseñas').is(':checked')) {
+            $('#ContraseniaActual').get(0).type = 'text';
+            $('#ContraseniaNueva').get(0).type = 'text';
+            $('#ContraseniaRepetir').get(0).type = 'text';
+        } else {
+            $('#ContraseniaActual').get(0).type = 'password';
+            $('#ContraseniaNueva').get(0).type = 'password';
+            $('#ContraseniaRepetir').get(0).type = 'password';
+        }
+    });
+</script>

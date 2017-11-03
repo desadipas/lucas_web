@@ -1,0 +1,71 @@
+﻿<div class="bg" ng-controller="modalidadController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="wiz">
+                <div class="wiz">
+                    <div class="wiz-block" ng-repeat="item in vm.Wizard" ng-class="{'pasado' : item.cClassEstilo == 'done', 'actual' : item.cClassEstilo == 'active', 'faltante' : item.cClassEstilo == ''}">
+                        <a href="" type="button" class="btn btn-circle">{{item.nOrdenFlujo}}</a>
+                        <p>{{item.cNombreProceso}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="mensaje-estandar">
+                <h3>Escoge el banco</h3>
+                <p>Donde desees que te enviemos el dinero y digita tu <strong>número de cuenta de ahorros</strong>.</p>
+            </div>
+        </div>
+        <form class="form-horizontal form-standar" name="frmModalidad" role="form" ng-submit="vm.modalidad(frmModalidad.$valid)" novalidate>
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmModalidad.banco.$invalid && frmModalidad.$submitted}">
+                        <label class="col-sm-4 control-label">Banco</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" ng-model="vm.Banco" required name="banco">
+                                <option value="">--Seleccione--</option>
+                                <option value="{{banco.nValor}}" ng-repeat="banco in vm.listaBancos">{{banco.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmModalidad.cuenta.$invalid && frmModalidad.$submitted}">
+                        <label class="col-sm-4 control-label">Cuenta de ahorros:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="vm.Cuenta" required name="cuenta" onKeyPress="return SoloNumerosInputs(event)" autocomplete="off" placeholder="Ejemplo: 19478943546468486" maxlength="25"/>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmModalidad.cuenta.$invalid && frmModalidad.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="confirmacion">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-6">
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-danger btn-block btn-anterior" ui-sref="dashboard" ui-sref-active="active">
+                                <span class="glyphicon glyphicon-triangle-left"></span> Volver a la bandeja
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <span class="glyphicon glyphicon-triangle-right"></span> Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+</script>

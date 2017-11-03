@@ -1,0 +1,39 @@
+﻿footer .icobook {
+    background-position: -250px -145px;
+    width: 45px;
+    height: 18px;
+    display: inline-block;
+    background-image: url("../images/v1/sprite.png");
+    background-repeat: no-repeat;
+}
+
+footer .libro-reclamaciones {
+    position: relative;
+    padding-top: 15px;
+    display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+
+    footer .libro-reclamaciones {
+        padding-top: 0px;
+        margin-bottom: 20px;
+    }
+}
+
+footer .libro-reclamaciones a {
+    text-decoration: none;
+    color: inherit;
+}
+
+footer .libro-reclamaciones .text-libro {
+    text-transform: uppercase;
+    text-align: right;
+    position: relative;
+    top: -4px;
+    margin-left: 10px;
+}
+
+footer .libro-reclamaciones .superintendencia {
+    text-align: center;
+}

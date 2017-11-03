@@ -1,0 +1,270 @@
+﻿<div class="bg" ng-controller="libroReclamacionesController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="welcome">
+                <h3>FORMULARIO DE HOJA DE RECLAMACIÓN</h3>
+            </div>
+        </div>
+
+        <style>
+            .titulo-seccion {
+                margin-bottom: 20px;
+            }
+
+            textarea {
+                resize: none;
+            }
+        </style>
+
+        <form name="frmLibroReclamaciones" class="form-horizontal form-standar form-act-datos" role="form" novalidate ng-submit="vm.LibroReclamacion(frmLibroReclamaciones.$valid)">
+            <h4>Datos Personales</h4>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cDocumento.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Tipo/Documento: *</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select class="form-control" name="TipoDocumento" id="cmbTipoDocumento" ng-model="vm.Libro.nTipoDoc" ng-required="true" ng-disabled="vm.bloquear">
+                                    <option value="">--Seleccione--</option>
+                                    <option ng-repeat="item in vm.TipoDoc" value="{{item.nValor}}">{{item.cNomCod}}</option>
+                                </select>
+                                <span class="input-group-addon">-</span>
+                                <input type="text" class="form-control" maxlength="9" ng-maxlength="9" id="txtDocumento" name="cDocumento" ng-model="vm.Libro.cDocumento" autocomplete="off" placeholder="Documento..." onKeyPress="return SoloNumerosInputs(event)" ng-required="true" ng-disabled="vm.bloquear">
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cNombres.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Nombres: *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nombres..." id="txtcNombres" name="cNombres" ng-model="vm.Libro.cNombres" ng-required="true" onKeyPress="return SoloLetrasInputs(event)" autocomplete="off" maxlength="40" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cNombres.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cApePat.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Apellido Paterno: *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Ejemplo: Apellido Paterno..." id="txtcApePat" name="cApePat" ng-model="vm.Libro.cApePat" ng-required="true" onKeyPress="return SoloLetrasInputs(event)" autocomplete="off" maxlength="40" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cNombres.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cApeMat.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Apellido Materno: *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Ejemplo: Apellido Materno..." id="txtcApeMat" name="cApeMat" ng-model="vm.Libro.cApeMat" ng-required="true" onKeyPress="return SoloLetrasInputs(event)" autocomplete="off" maxlength="40" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cApeMat.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cCelular.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Celular: *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Celular..." id="txtcCelular" name="cCelular" ng-model="vm.Libro.cCelular" ng-required="true" onKeyPress="return SoloNumerosInputs(event)" autocomplete="off" maxlength="9" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cCelular.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+            <h4>Dirección</h4>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cDireccion.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-2 control-label">Dirección: *</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="Dirección..." id="txtcDireccion" name="cDireccion" ng-model="vm.Libro.cDireccion" ng-required="true" autocomplete="off" maxlength="80" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cDireccion.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cLote.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Nro./Mz./Lote: *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nro./Mz./Lote..." id="txtLote" name="cLote" ng-model="vm.Libro.cLote" ng-required="true" autocomplete="off" maxlength="5" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cLote.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cDpto.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Int./Dpto.: *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Int./Dpto..." id="txtcDpto" name="cDpto" ng-model="vm.Libro.cDpto" ng-required="true" autocomplete="off" maxlength="5" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cDpto.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.Departamento.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Departamento: <span class="ast">*</span></label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Libro.cDepartamento" id="cmbDepartamento" name="Departamento" class="form-control" ng-change="vm.Provincia()" required ng-disabled="vm.bloquear">
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Departamento.cCodZona}}" ng-repeat="Departamento in vm.DepartamentoLista">{{Departamento.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.Provincia.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Provincia: <span class="ast">*</span></label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Libro.cProvincia" id="cmbProvincia" name="Provincia" class="form-control" ng-change="vm.Distrito()" required ng-disabled="vm.bloquear">
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Provincia.cCodZona}}" ng-repeat="Provincia in vm.ProvinciaLista">{{Provincia.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.Distrito.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Distrito: <span class="ast">*</span></label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Libro.cDistrito" id="cmbDistrito" name="Distrito" class="form-control" required ng-disabled="vm.bloquear">
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Distrito.cCodZona}}" ng-repeat="Distrito in vm.DistritoLista">{{Distrito.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4>Datos de Reclamación:</h4>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cMail.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Tipo de Respuesta:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Libro.cTipoRespuesta" id="cmdTipoRespuesta" name="TipoRespuesta" class="form-control" required>
+                                <option value="1" selected>Correo</option>
+                                <option value="2">Agencia</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" ng-if="vm.Libro.cTipoRespuesta == 1">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cMail.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Correo: *</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" placeholder="Correo..." id="txtcMail" name="cMail" ng-model="vm.Libro.cMail" ng-required="vm.Libro.cTipoRespuesta == 1" autocomplete="off" maxlength="50" ng-disabled="vm.bloquear">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cMail.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" ng-if="vm.Libro.cTipoRespuesta == 2">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.Agencia.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Agencia: *</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Libro.nAgencia" name="Agencia" class="form-control" ng-required="vm.Libro.cTipoRespuesta == 2">
+                                <option value="0">--Seleccione--</option>
+                                <option ng-repeat="item in vm.AgenciaLista" value="{{item.nCodAge}}">{{item.cNomAge}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Nom. Padre o Madre: </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Nombre Padre o Madre..." id="txtcNomPadreMadre" name="cNomPadreMadre" ng-model="vm.Libro.cNomMadrePadre" onKeyPress="return SoloLetrasInputs(event)" autocomplete="off" maxlength="80">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Contrato:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Contrato..." id="txtContrato" name="cContrato" ng-model="vm.Libro.cContrato" autocomplete="off" maxlength="50">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.dFechaOcu.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-4 control-label">Fecha de Ocurrencia: *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="txtFechaReg" name="dFechaOcu" placeholder="Fecha de ocurrencia..." ng-model="vm.Libro.dFechaOcu" maxlength="10" autocomplete="off" ng-required="true">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.dFechaOcu.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">                
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Monto reclamado: </label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Monto Reclamado..." ng-model="vm.Libro.nMontoReclamado" onKeyPress="return SoloNumerosInputs(event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Pedido:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="4" placeholder="Pedido..." ng-model="vm.Libro.cPedido" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmLibroReclamaciones.cReclamo.$invalid && frmLibroReclamaciones.$submitted}">
+                        <label class="col-sm-2 control-label">Consulta/Queja/Reclamo: *</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="cReclamo" rows="4" placeholder="Descripción o detalle del acontecimiento" ng-required="true" ng-model="vm.Libro.cObservaciones" maxlength="500"></textarea>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmLibroReclamaciones.cReclamo.$invalid && frmLibroReclamaciones.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center">(*) Datos obligatorios</p>
+            <div class="row">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-block">Registar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    // make collapsed panel header clickable
+    $('.panel .link .t-collapse').click(function () {
+        $(this).parents(".panel").children(".panel-heading").children(".tools").children(".t-collapse").click();
+    });
+
+    $(function () {
+        $('#txtFechaReg').mask('00/00/0000');
+    });
+
+    $(function () {
+        $("#txtFechaReg").datepicker({ changeMonth: true, changeYear: true, dateFormat: 'dd/mm/yy' });
+    });
+</script>

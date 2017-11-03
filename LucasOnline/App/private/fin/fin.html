@@ -1,0 +1,43 @@
+﻿<script>
+    fbq('track', 'cliente aceptado');
+</script>
+<div class="bg" ng-controller="finController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="wiz">
+                <div class="wiz">
+                    <div class="wiz-block" ng-repeat="item in vm.Wizard" ng-class="{'pasado' : item.cClassEstilo == 'done', 'actual' : item.cClassEstilo == 'active', 'faltante' : item.cClassEstilo == ''}">
+                        <a href="" type="button" class="btn btn-circle">{{item.nOrdenFlujo}}</a>
+                        <p>{{item.cNombreProceso}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="welcome welcome-100 text-center">
+                <h4>Hemos gestionado tu solicitud</h4>
+                <h3>FELICITACIONES</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="felicitaciones">
+                    <p>
+                        En una hora aproximadamente se efectuará la transferencia bancaria al banco seleccionado(*)
+                    </p>
+                    <small class="blocky">(*) El desembolso se hará efectivo en horario de: lunes a viernes de 9:00 a 18:00 horas, no incluye feriados</small>
+                    <button class="btn btn-primary" ui-sref="dashboard" ui-sref-active="active">
+                        Historial de préstamos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+</script>

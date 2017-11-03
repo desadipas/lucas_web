@@ -1,0 +1,93 @@
+﻿<div class="bg" ng-controller="firmaElectronicaController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="wiz">
+            <div class="wiz">
+                <div class="wiz-block" ng-repeat="item in vm.Wizard" ng-class="{'pasado' : item.cClassEstilo == 'done', 'actual' : item.cClassEstilo == 'active', 'faltante' : item.cClassEstilo == ''}">
+                    <a href="" type="button" class="btn btn-circle">{{item.nOrdenFlujo}}</a>
+                    <p>{{item.cNombreProceso}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="usuario-bienvenida">
+            <div class="mensaje-estandar">
+                <h3>Estás a sólo un paso de obtener tu préstamo</h3>
+                <p>
+                    Lee los documentos, luego solicita el <strong>código SMS (04 dígitos)</strong> ingrésalo en el espacio en blanco y haz click en continuar
+                </p>
+            </div>
+        </div>
+
+        <form class="form-horizontal" novalidate name="frmDatosContrato" role="form" ng-submit="vm.ContinuarFlujo(frmDatosContrato.$valid)">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="content-unit colored">
+                        <div class="cuadro-datos">
+                            <h3>
+                                Datos del préstamo
+                            </h3>
+                            <ul>
+                                <li>Préstamo: <span ng-bind="vm.Credito.nPrestamo"></span></li>
+                                <li>Cuotas: <span ng-bind="vm.Credito.nCuotas"></span></li>
+                                <li>Monto cuota: <span ng-bind="vm.Credito.nMontoCuota"></span></li>
+                                <li>TEM: <span ng-bind="vm.Credito.nTEM"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="documentos-container">
+                        <a href="" ng-click="vm.MuestraReporte(6)"><div class="documento">Solicitud</div></a>
+                        <a href="" ng-click="vm.MuestraReporte(1)"><div class="documento">Hoja Resumen 1</div></a>
+                        <a href="" ng-click="vm.MuestraReporte(2)"><div class="documento">Hoja Resumen 2</div></a>
+                        <a href="" ng-click="vm.MuestraReporte(5)"><div class="documento">Contrato</div></a>
+                        <a href="" ng-click="vm.MuestraReporte(7)"><div class="documento">Seguro</div></a>
+                        <a href="" ng-click="vm.MuestraReporte(8)" ng-if="vm.ClientePEP"><div class="documento">PEP</div></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="datos-seguridad">
+                    <div class="col-md-12 text-center">
+                        <div class="checkbox">
+                            <label><input type="checkbox" ng-model="vm.bAutoriza" required value="">He leído y estoy de acuerdo con las condiciones establecidas en todos los documentos informados por el presente Préstamo Aprobado.</label>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="vm.enviaCodigo()">
+                            <i class="fa fa-hand-o-up" aria-hidden="true"></i> Solicitar código
+                        </button>
+                        <div class="form-group pin">
+                            <label for="pin">Ingresa tu pin de seguridad</label>
+                            <input type="text" class="form-control pin-4 text-center" id="pin" autofocus required autocomplete="off" maxlength="4" ng-model="vm.CodigoPermiso" ng-minlength="4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="confirmacion">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-6">
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-danger btn-block btn-anterior" ui-sref="dashboard" ui-sref-active="active">
+                                <span class="glyphicon glyphicon-triangle-left"></span> Volver a la bandeja
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <span class="glyphicon glyphicon-triangle-right"></span> Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+</script>

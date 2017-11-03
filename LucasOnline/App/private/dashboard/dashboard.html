@@ -1,0 +1,149 @@
+﻿<div class="bg" ng-controller="dashboardController as vm">
+    <div class="container  contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="welcome">
+                <h4>Bienvenido</h4>
+                <h3 id='nombre-usuario' ng-bind="vm.nombreCliente"></h3>
+            </div>
+            <div class="button-container">
+                <a href="" ng-click="vm.iniciaPrestamo()">
+                    <button>Solicitar un préstamo</button>
+                </a>
+            </div>
+            <p class="text-right"><button class="btn btn-danger" ng-click="vm.refrecarBandeja()"><span class="fa fa-refresh"></span> Refrescar bandeja</button></p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-unit ">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr class="principal">
+                                <td class="text-center">Fecha de préstamo</td>
+                                <td class="text-center">Producto</td>
+                                <td class="text-center">Préstamo</td>
+                                <td class="text-center">Cuotas</td>
+                                <td class="text-center">Monto por cuota</td>
+                                <td class="text-center">Estado</td>
+                                <td class="text-center"></td>
+                                <td></td>
+                            </tr>
+                            <tr ng-repeat="item in vm.Credito" ng-class="{'danger' : (item.nEstado == 6), 'warning' : (item.nEstado == 10), 'success' : (item.nEstado == 30)}">
+                                <td class="text-center">{{::item.dFechaRegistro}}</td>
+                                <td class="text-center">{{::item.cProducto}} - {{::item.cSubProd}}</td>
+                                <td class="text-center">{{::item.nPrestamo | currency : 'S/ '}}</td>
+                                <td class="text-center">{{::item.nNroCuotas}}</td>
+                                <td class="text-center">{{::item.nMontoCuota | currency:'S/ '}}</td>
+                                <!--<td class="text-center">{{::item.cMoneda}}</td>-->
+                                <td class="text-center">{{::item.cEstado}}</td>
+                                <td><button type="button" 
+                                            ng-class="{
+                                                'btn btn-block btn-primary entabla' : (item.nEstado == 0 || item.nEstado == 1), 
+                                                'btn btn-block btn-default btn-entablado' : (item.nEstado == 10 || item.nEstado == 6), 
+                                                'btn btn-block btn-success btn-entablado' : (item.nEstado == 30 || item.nEstado == 50)}" 
+                                            ng-disabled="item.nEstado == 10 || item.nEstado == 6" 
+                                            ng-click="vm.continuarPrestamo(item.cFormulario, item.nIdFlujoMaestro, item.nEstado, item.nCodCred, item.nCodAge, item.nPrestamo)">
+                                            {{item.nEstado == 30 || item.nEstado == 50 ? 'Detalles' : 'Continuar'}}
+                                    </button>
+                                </td>
+                                <td><button type="button" ng-class="{
+                                            'btn btn-block btn-primary btn-entablado' : (item.nEstado == 0 || item.nEstado == 1), 
+                                            'btn btn-block btn-default btn-entablado' : (item.nEstado == 10 || item.nEstado == 6 || item.nEstado == 30 || item.nEstado == 50)}" 
+                                            ng-disabled="item.nEstado == 30 || item.nEstado == 50"
+                                            ng-click="vm.eliminarFlujo(item.nIdFlujoMaestro, item.nEstado)"><span class="fa fa-trash"></span></button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <input type="text" id="txtNombres" ng-model="vm.Persona.cNombres" style="display:none" />
+        <input type="text" id="txtApePaterno" ng-model="vm.Persona.cApePat" style="display:none" />
+        <input type="text" id="txtFechaNac" ng-model="vm.Persona.dFechaNacimiento" style="display:none" />
+        <input type="text" id="txtEmail" ng-model="vm.Persona.cEmail" style="display:none" />
+        <input type="text" id="txtCelular" ng-model="vm.Persona.cCelular" style="display:none" />
+    </div>
+
+    <div id="modalEliminaFlujo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">¿Por qué quieres anular ese proceso?</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea class="form-control" placeholder="Escríbenos el porqué de tu decisión…" ng-model="vm.cComentario">
+
+                    </textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" ng-click="vm.anularProceso()">Anular</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div id="lenddo_verify" style="display:none"></div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+
+    var f = new Date();
+    var fecha = f.getDate() + "" + (f.getMonth() + 1) + "" + f.getFullYear();
+    var time = f.getHours() + "" + f.getMinutes() + "" + f.getSeconds();
+    var application_id = 'LENDDOLUCAS' + fecha + (new Date().getTime() * Math.round(Math.random() * ((899999) + 100000)));
+
+    $('#application_id_select').val(application_id);
+
+    var lenddo_cs = {
+        button: { 'name': 'blue_get_verified' },
+        button: { 'text': 'Continuar...' },
+        ps_id: '58e3ad505873364c86fa7028',
+        a_id: application_id,
+        verification_fields: {
+            firstname: function () {
+                return $('#txtNombres').val()
+            },
+            lastname: function () {
+                return $('#txtApePaterno').val()
+            },
+            birthdate: function () {
+                return $('#txtFechaNac').val()
+            },
+            employer: '',
+            email: function () {
+                return $('#txtEmail').val()
+            },
+            mobilephone: function () {
+                return $('#txtCelular').val()
+            },
+            university: ''
+        },
+        onSubmit: function (cb) { cb(); }
+    };
+
+    (function () {
+        var la = document.createElement('script'); la.type = 'text/javascript'; la.async = true;
+        la.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'authorize.partner-service.link' + '/verify.js' + '?v=' + Date.now();
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(la, s);
+    })();
+
+
+    // make collapsed panel header clickable
+    $('.panel .link .t-collapse').click(function () {
+        $(this).parents(".panel").children(".panel-heading").children(".tools").children(".t-collapse").click();
+    });
+
+</script>

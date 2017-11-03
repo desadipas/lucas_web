@@ -1,0 +1,81 @@
+﻿<section class="login" ng-controller="loginController as vm">
+    <div class="cowboy">
+        <div class="objeto-login">
+            <div class="login-contenedor">
+                <img src="../Images/login/lucas-u.png">
+                <ul class="nav nav-tabs hide" id="tabs">
+                    <li class="active"><a data-toggle="tab" data-target="#iniciarSesion" href=""></a></li>
+                    <li class="disabled"><a data-toggle="tab" data-target="#olvidasteContrasena" href=""></a></li>
+                    <li class="disabled"><a data-toggle="tab" data-target="#olvidasteConfirmacion" href=""></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="iniciarSesion" class="tab-pane fade in active">
+                        <h2 class="title-login">Inicio de sesión</h2>
+                        <form class="login-form" method="post" name="frmLogin" role='form' novalidate ng-submit="vm.singIn(frmLogin.$valid)">
+                            <div class="form-group">
+                                <input type="email" required="required" autocomplete="off" placeholder="Correo electrónico" autofocus ng-model="vm.user.userName">
+                                <input type="password" required="required" autocomplete="off" placeholder="Contraseña" ng-model="vm.user.password">
+                            </div>
+                            <div class="form-down">
+                                <button type="submit">Iniciar sesión</button>
+                                <a id="forgot-password" class="forgot-password">Olvidaste la contraseña?</a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="olvidasteContrasena">
+                        <h2 class="title-login">¿Olvidaste tu contraseña?</h2>
+                        <form class="login-form" name="frmLoginC1" role='form' ng-submit="vm.validarCambio(frmLoginC1.$valid)" novalidate>
+                            <div class="form-group">
+                                <input type="email" required="required" autocomplete="off" placeholder="Correo electrónico" autofocus ng-model="vm.userCambio.userName">
+                                <input type="password" required="required" autocomplete="off" placeholder="Nueva Contraseña" ng-model="vm.userCambio.password1">
+                                <input type="password" required="required" autocomplete="off" placeholder="Confirmar Contraseña" ng-model="vm.userCambio.password2">
+                            </div>
+                            <div class="form-down">
+                                <button type="submit" class="button-form-down">Continuar</button>
+                                <a id="back-login" class="forgot-password mid">Volver atrás</a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="olvidasteConfirmacion">
+                        <h2 class="title-login">¿Olvidaste tu contraseña?</h2>
+                        <p>Le hemos enviado un código a su celular, por favor digítelo.</p>
+                        <form class="login-form" name="frmLoginC2" role='form' ng-submit="vm.cambiarContrasena(frmLoginC2.$valid)" novalidate>
+                            <div class="form-group">
+                                <input type="text" required="required" autocomplete="off" placeholder="Código de confirmación" maxlength="4" ng-model="vm.userCambio.CodigoVeri">
+                            </div>
+                            <div class="form-down">
+                                <button type="submit">Cambiar contraseña</button>
+                                <a id="back-forgot" class="forgot-password">Volver atrás</a>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+
+    $('#forgot-password').on('click', function () {
+        $('#tabs a[data-target="#olvidasteContrasena"]').tab('show');
+    });
+
+    $('#back-login').on('click', function () {
+        $('#tabs a[data-target="#iniciarSesion"]').tab('show');
+    });
+    $('#back-forgot').on('click', function () {
+        $('#tabs a[data-target="#olvidasteContrasena"]').tab('show');
+    });
+</script>

@@ -1,0 +1,570 @@
+﻿<div class="bg" ng-controller="personaActController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="mensaje-estandar">
+                <h3>Ficha de Datos Personales (Actualización)</h3>
+                <p>Solo puedes actualizar tu dirección, datos de empleo y algunos campos de datos personales.</p>
+            </div>
+        </div>
+        <form name="frmPerActualiza" class="form-horizontal form-standar form-act-datos" role="form" novalidate ng-submit="vm.PersonaPermiso(frmPerActualiza.$valid)">
+            <h3 class="titulo-seccion">Datos Personales</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Documento.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Documento:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.nNroDoc" id="txtDocumento" name="Documento" type="text" class="form-control" placeholder="Ejemplo: 12345678" maxlength="8" ng-minlength="3" autocomplete="off" required onKeyPress="return SoloNumerosInputs(event)" ng-disabled="vm.mostrarCampos" />
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.Documento.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : vm.mostrarErrorCodVerificacion}" style="display:none;">
+                        <label class="col-sm-4 control-label">Cod. Verificador:</label>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input ng-model="vm.Persona.nCodigoVerificador" id="txtCodigoVerificador" name="CodigoVerificador" type="text" class="form-control" placeholder="Código.." maxlength="1" autocomplete="off" ng-disabled="vm.mostrarCampos" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#imagemodal" ng-disabled="vm.mostrarCampos">?</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Nombres.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Nombres:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cNombres" ng-minlength="3" id="txtNombres" name="Nombres" type="text" class="form-control" placeholder="Ejemplo: Hugo Antonio" required onKeyPress="return SoloLetrasInputs(event)" autocomplete="off" maxlength="40" ng-disabled="vm.mostrarCampos">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.Nombres.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.ApePaterno.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Ape. Paterno:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cApePat" id="txtApePaterno" name="ApePaterno" type="text" class="form-control" placeholder="Ejemplo: Roca" required onKeyPress="return SoloLetrasInputs(event)" autocomplete="off" maxlength="30" ng-disabled="vm.mostrarCampos">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.ApePaterno.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.ApeMaterno.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Ape. Materno:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cApeMat" id="txtApeMaterno" name="ApeMaterno" type="text" class="form-control" placeholder="Ejemplo: Espinoza" required onKeyPress="return SoloLetrasInputs(event)" autocomplete="off" maxlength="30" ng-disabled="vm.mostrarCampos">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.ApeMaterno.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Sexo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Sexo:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nSexo" id="cmbSexo" name="Sexo" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Sexo.nValor}}" ng-repeat="Sexo in vm.SexoList">{{Sexo.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Celular.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Celular:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cCelular" id="txtCelular" name="Celular" type="text" class="form-control" placeholder="Ejemplo: 945943857" required maxlength="9" onkeypress="return SoloNumerosInputs(event)" autocomplete="off" ng-disabled="vm.mostrarCampos">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.Celular.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Email.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Correo:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cEmail" id="txtEmail" name="Email" type="email" class="form-control" placeholder="Ejemplo: hugo.rock20@hotmail.com" required maxlength="80" autocomplete="off" ng-disabled="vm.mostrarCampos">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.Email.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Teléfono Fijo:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cTelefono" id="txtTelefono" name="Telefono" type="text" class="form-control" placeholder="Ejemplo: 01 7541236" maxlength="9" onkeypress="return SoloNumerosInputs(event)" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.FechaNacimiento.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Fecha Nac.:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.dFechaNacimiento" name="FechaNacimiento" type="text" id="txtFechaNac" class="form-control" placeholder="Ejemplo: 27/05/1995" data-date-format="dd/mm/yyyy" required maxlength="10" autocomplete="off">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.FechaNacimiento.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-8 control-label">Ejerce o a ejercido algún cargo público:</label>
+                        <div class="col-sm-4">
+                            <label class="radio-inline"><input ng-model="vm.Persona.nEjerceSI" type="radio" name="Radio1">SI</label>
+                            <label class="radio-inline"><input ng-model="vm.Persona.nEjerceNO" type="radio" name="Radio1">NO</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.EstadoCivil.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Estado Civil</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nEstadoCivil" id="cmbEstadoCivil" name="EstadoCivil" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{EstadoCivil.nValor}}" ng-repeat="EstadoCivil in vm.EstadoCivilLista">{{EstadoCivil.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="vm.Persona.nEstadoCivil == 2">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.DNIConyuge.$invalid && frmPerActualiza.$submitted && vm.Persona.nEstadoCivil ==2}">
+                        <label class="col-sm-4 control-label">Dni Cónyuge:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cDniConyuge" id="txtDniConyuge" name="DNIConyuge" type="text" class="form-control" placeholder="Ejemplo: 12345678" required maxlength="8" onkeypress="return SoloNumerosInputs(event)" autocomplete="off">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.DNIConyuge.$invalid && frmPerActualiza.$submitted && vm.Persona.nEstadoCivil ==2"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.NombreConyuge.$invalid && frmPerActualiza.$submitted && vm.Persona.nEstadoCivil ==2}">
+                        <label class="col-sm-4 control-label">Nombres Cónyuge:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cNomConyuge" id="txtNombreConyuge" name="NombreConyuge" type="text" class="form-control" placeholder="Ejemplo: Jehidi Estefani" required maxlength="40" onkeypress="return SoloLetrasInputs(event)" autocomplete="off">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.NombreConyuge.$invalid && frmPerActualiza.$submitted && vm.Persona.nEstadoCivil ==2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="vm.Persona.nEstadoCivil == 2">
+                <div class="col-sm-6" ng-class="{'has-error has-feedback' : frmPerActualiza.ApeConyuge.$invalid && frmPerActualiza.$submitted && vm.Persona.nEstadoCivil ==2}">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Apellidos Cónyuge:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cApeConyuge" id="txtApellidoConyuge" name="ApeConyuge" type="text" class="form-control" placeholder="Ejemplo: Chavez Manrrique" required maxlength="40" onkeypress="return SoloLetrasInputs(event)" autocomplete="off">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.ApeConyuge.$invalid && frmPerActualiza.$submitted && vm.Persona.nEstadoCivil ==2"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3 class="titulo-seccion">Dirección</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Departamento.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Departamento:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.cDepartamento" id="cmbDepartamento" name="Departamento" class="form-control" ng-change="vm.Provincia()" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Departamento.cCodZona}}" ng-repeat="Departamento in vm.DepartamentoLista">{{Departamento.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Provincia.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Provincia:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.cProvincia" id="cmbProvincia" name="Provincia" class="form-control" ng-change="vm.Distrito()" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Provincia.cCodZona}}" ng-repeat="Provincia in vm.ProvinciaLista">{{Provincia.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.TipoDireccion.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Tipo Dirección:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nDirTipo1" id="cmbDireccion1" name="TipoDireccion" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{TipoDireccion.nValor}}" ng-repeat="TipoDireccion in vm.TipoDireccionLista">{{TipoDireccion.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.DireccionTexto1.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Dirección:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cDirValor1" id="txtDireccionValor1" name="DireccionTexto1" type="text" class="form-control" required maxlength="30" autocomplete="off" />
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.DireccionTexto1.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.NroMz.$invalid && frmPerActualiza.$submitted }">
+                        <label class="col-sm-4 control-label">Nro. o Mz.:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select ng-model="vm.Persona.nDirTipo2" id="cmbDireccion2" name="NroMz" class="form-control"
+                                        ng-options="item.nValor as item.cNomCod for item in vm.NrooMz" required>
+                                    <option value="">----</option>
+                                </select>
+                                <span class="input-group-addon">-</span>
+                                <input ng-model="vm.Persona.cDirValor2" id="txtDireccionValor2" name="DireccionTexto2" type="text" class="form-control" maxlength="5" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Dpto. o Lt.:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select ng-model="vm.Persona.nDirTipo3" id="cmbDireccion3" name="LtDpto" class="form-control"
+                                        ng-options="item.nValor as item.cNomCod for item in vm.LtoDpto">
+                                    <option value="">---</option>
+                                </select>
+                                <span class="input-group-addon">-</span>
+                                <input ng-model="vm.Persona.cDirValor3" id="txtDireccionValor3" name="DireccionTexto3" type="text" class="form-control" maxlength="5" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Distrito.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Distrito:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.cDistrito" id="cmbDistrito" name="Distrito" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Distrito.cCodZona}}" ng-repeat="Distrito in vm.DistritoLista">{{Distrito.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.TipoResidencia.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Tipo Residencia:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nTipoResidencia" id="cmbTipoResidencia" name="TipoResidencia" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{TipoResidencia.nValor}}" ng-repeat="TipoResidencia in vm.TipoResidenciaLista">{{TipoResidencia.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3 class="titulo-seccion">Datos de empleo</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Actividad.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Actividad Eco.:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nCUUI" id="cmbCUUI" name="Actividad" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Actividad.nValor}}" ng-repeat="Actividad in vm.ActividadEconomicaLista">{{Actividad.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Situacion.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Situación Lab.:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nSitLab" id="cmbSituacionLaboral" name="Situacion" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Situacion.nValor}}" ng-repeat="Situacion in vm.SituacionLaboralLista">{{Situacion.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.Profesion.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Profesión:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nProfes" id="cmbProfesion" name="Profesion" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Profesion.nValor}}" ng-repeat="Profesion in vm.ProfesionLista">{{Profesion.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.TipoEmpleo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Tipo Empleo:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nTipoEmp" id="cmbTipoEmpleo" name="TipoEmpleo" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{TipoEmpleo.nValor}}" ng-repeat="TipoEmpleo in vm.TipoEmpleoList">{{TipoEmpleo.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="vm.Persona.nProfes == 999">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : vm.Persona.nProfes == 999 && frmPerActualiza.ProfesionOtros.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Especificar profesion</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cProfesionOtros" id="txtProfesionOtros" name="ProfesionOtros" type="text" class="form-control" placeholder="Ejemplo: Docente" autocomplete="off" maxlength="40" ng-required="vm.Persona.nProfes == 999">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="vm.Persona.nProfes == 999 && frmPerActualiza.ProfesionOtros.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">RUC:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cRuc" id="txtRUC" name="RUC" type="text" class="form-control" placeholder="Ejemplo: 20123456789" autocomplete="off" maxlength="11" onKeyPress="return SoloNumerosInputs(event)">
+                            <span>Si no sabes el RUC del lugar donde laboral da clic <a href="http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias" target="_blank">aquí</a>.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Centro Laboral/Empleador:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cNomEmpresa" id="txtNombreEmpresa" name="Empresa" type="text" class="form-control" placeholder="Ejemplo: Tibox SRL" autocomplete="off" maxlength="40">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.IngLaboral.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Fecha Ing. Laboral:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.dFecIngrLab" type="text" id="txtFrechaIngLaboral" name="IngLaboral" class="form-control" placeholder="12/12/2012" autocomplete="off" required>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.IngLaboral.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.TelEmpleo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Teléfono Empleo:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cTelfEmpleo" id="txtTelefonoEmpleo" name="TelEmpleo" type="text" class="form-control" placeholder="Ejemplo: 01 1234567" autocomplete="off" maxlength="9" onKeyPress="return SoloNumerosInputs(event)" required>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.TelEmpleo.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.IngresoDeclarado.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Ingreso Declarado:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-addon">S/</span>
+                                <input ng-model="vm.Persona.nIngresoDeclado" id="txtIngresoDeclarado" name="IngresoDeclarado" type="text" class="form-control text-right" placeholder="Ejemplo: 850" autocomplete="off" maxlength="5" onKeyPress="return SoloNumerosInputs(event)" required format="number" decimals="2" number-format>
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <h3 class="titulo-seccion">Dirección de empleo</h3>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.DepartamentoEmpleo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Departamento:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.cDepartamentoEmpleo" id="cmbDepartamentoEmpleo" name="DepartamentoEmpleo" class="form-control" ng-change="vm.ProvinciaEmpleo()" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Departamento.cCodZona}}" ng-repeat="Departamento in vm.DepartamentoEmpleoLista">{{Departamento.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.ProvinciaEmpleo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Provincia:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.cProvinciaEmpleo" id="cmbProvinciaEmpleo" name="ProvinciaEmpleo" class="form-control" ng-change="vm.DistritoEmpleo()" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Provincia.cCodZona}}" ng-repeat="Provincia in vm.ProvinciaEmpleoLista">{{Provincia.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.TipoDireccionEmpleo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Tipo de dirección:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.nDirTipo1Empleo" id="cmbDireccion1Empleo" name="TipoDireccionEmpleo" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{TipoDireccion.nValor}}" ng-repeat="TipoDireccion in vm.TipoDireccionEmpleoLista">{{TipoDireccion.cNomCod}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.DirEmpleo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Dirección Empleo:</label>
+                        <div class="col-sm-8">
+                            <input ng-model="vm.Persona.cDirValor1Empleo" id="txtDireccionEmpleo" name="DirEmpleo" type="text" class="form-control" placeholder="Ejemplo: Av. Parque sur 129" autocomplete="off" maxlength="50" required>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" ng-if="frmPerActualiza.DirEmpleo.$invalid && frmPerActualiza.$submitted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.NroMzEmpleo.$invalid && frmPerActualiza.$submitted }">
+                        <label class="col-sm-4 control-label">Nro o Mz:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select ng-model="vm.Persona.nDirTipo2Empleo" id="cmbDireccion2" name="NroMzEmpleo" class="form-control"
+                                        ng-options="item.nValor as item.cNomCod for item in vm.NrooMzEmpleo" required>
+                                    <option value="">----</option>
+                                </select>
+                                <span class="input-group-addon">-</span>
+                                <input ng-model="vm.Persona.cDirValor2Empleo" id="txtDireccionValor2Empleo" name="DireccionTexto2Empleo" type="text" class="form-control" maxlength="5" autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Dpto o Lt.:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select ng-model="vm.Persona.nDirTipo3Empleo" id="cmbDireccion3Empleo" name="LtDptoEmpleo" class="form-control"
+                                        ng-options="item.nValor as item.cNomCod for item in vm.LtoDptoEmpleo">
+                                    <option value="">---</option>
+                                </select>
+                                <span class="input-group-addon">-</span>
+                                <input ng-model="vm.Persona.cDirValor3Empleo" id="txtDireccionValor3Empleo" name="DireccionTexto3Empleo" type="text" class="form-control" maxlength="5" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error has-feedback' : frmPerActualiza.DistritoEmpleo.$invalid && frmPerActualiza.$submitted}">
+                        <label class="col-sm-4 control-label">Distrito:</label>
+                        <div class="col-sm-8">
+                            <select ng-model="vm.Persona.cDistritoEmpleo" id="cmbDistritoEmpleo" name="DistritoEmpleo" class="form-control" required>
+                                <option value="">--Seleccione--</option>
+                                <option value="{{Distrito.cCodZona}}" ng-repeat="Distrito in vm.DistritoEmpleoLista">{{Distrito.cNomZona}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input ng-model="vm.Persona.bAutoriza1" type="checkbox"> Autorizo a Edpyme Inversiones La Cruz a utilizar mis datos personales para los fines mencionados. <a href="../Images/landing/pdf/TerminosCondicionesCliente.pdf" target="_blank">Ver Términos y condiciones(*)</a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input ng-model="vm.Persona.bAutoriza2" type="checkbox"> Autorizo a Edpyme Inversiones La Cruz a enviarme informacion sobre campañas vigentes de sus productos.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-4">
+                    <p><button type="button" class="btn btn-danger btn-block btn-lg" ui-sref="dashboard" ui-sref-active="active"><span class="glyphicon glyphicon-triangle-left"></span> Volver</button></p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <button type='submit' class="btn btn-primary btn-block btn-lg"><span class="glyphicon glyphicon-ok"></span> Actualizar datos</button>
+                    </p>
+                </div>
+            </div>
+        </form>
+
+
+
+        <div id="modalConfirmar" class="modal fade actualizar-modal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Permiso para actualizar datos.</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Le hemos enviado un SMS con un código a su celular, por favor ingréselo para continuar con la actualización de sus datos.</p>
+                        <div class="row">
+                            <div class="col-md-offset-4 col-md-4">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input type="text" name="codigo" class="form-control text-center" autofocus ng-model="vm.CodigoPermiso" required autocomplete="off" maxlength="4" onKeyPress="return SoloNumerosInputs(event)" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-offset-4 col-md-4">
+                                <button class="btn btn-primary btn-block" ng-click="vm.PersonaActualiza()">Confirmar código</button>
+                            </div>
+                        </div>
+                        <h6 style="color: #FD293F"><b>Nota: Si usted actualiza sus datos y tiene préstamos en proceso estos se eliminarían.</b></h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" ng-click="vm.PersonaReenviaCodigo()">Reenviar SMS</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+
+    $(function () {
+        $("#txtFechaNac").datepicker({
+            changeMonth: true, changeYear: true, dateFormat: 'dd/mm/yy', yearRange: "-100:-17", defaultDate: "-17y-m-d"
+        });
+        $("#txtFrechaIngLaboral").datepicker({ changeMonth: true, changeYear: true, dateFormat: 'dd/mm/yy' });
+
+    });
+</script>

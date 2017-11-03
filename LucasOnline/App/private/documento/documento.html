@@ -1,0 +1,118 @@
+﻿<script>
+    
+
+
+    function getSelectedText(elementId) {
+        var elt = document.getElementById(elementId);
+
+        if (elt.selectedIndex == -1)
+            return null;
+
+        return elt.options[elt.selectedIndex].text;
+    }
+</script>
+<div class="bg" ng-controller="documentoController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="wiz">
+            <div class="wiz">
+                <div class="wiz-block" ng-repeat="item in vm.Wizard" ng-class="{'pasado' : item.cClassEstilo == 'done', 'actual' : item.cClassEstilo == 'active', 'faltante' : item.cClassEstilo == ''}">
+                    <a href="" type="button" class="btn btn-circle">{{item.nOrdenFlujo}}</a>
+                    <p>{{item.cNombreProceso}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="usuario-bienvenida">
+            <div class="mensaje-estandar">
+                <h3>Sólo faltan 2 pasos más</h3>
+                <p>
+                    Sube al portal un escaneado o foto de tu dni de frente y de reverso y de un recibo de agua o luz. Luego haz click en <strong>continuar.</strong>
+                </p>
+            </div>
+        </div>
+        <form class="form-standar">
+            <div class="row">
+                <div class="subida">
+                    <div class="content-unit">
+                        <div class="bg-subida">
+                            <div class="unidad-subida">
+                                Tipo de archivo:
+                            </div>
+                            <div class="unidad-subida">
+                                <select class="form-control" ng-model="vm.TipoDoc" id="cmbDocumentos">
+                                    <option ng-repeat="item in vm.TipoDocumento" value="{{item.nCodigo}}">{{item.cNombreDoc}}</option>
+                                </select>
+                            </div>
+                            <div class="unidad-subida">
+                                <button class="btn btn-danger" onclick="document.getElementById('file').click();">Elegir archivos</button>
+                                <input ng-hide="true" id="file" name="profileImage" type="file" onchange="angular.element(this).scope().LoadFileDataFil(this.files)" accept="image/*" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel-registro">
+                    <div class="col-md-12">
+                        <div class="content-unit">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Lista de archivos</div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tipo de archivo</th>
+                                                        <th>Nombre de archivo</th>
+                                                        <th>Eliminar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in vm.Documentos">
+                                                        <td>{{::item.cTipoArchivo}}</td>
+                                                        <td>{{::item.cNomArchivo}}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger btn-block btn-entablado" ng-click="vm.quitarArchivo($index)">
+                                                                <span class="fa fa-trash-o"> Eliminar</span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="confirmacion">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-6">
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-danger btn-block btn-anterior" ui-sref="dashboard" ui-sref-active="active">
+                                <span class="glyphicon glyphicon-triangle-left"></span> Volver a la bandeja
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary btn-block" ng-click="vm.DocumentosGrabar()">
+                                <span class="glyphicon glyphicon-triangle-right"></span> Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="file-id"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+</script>

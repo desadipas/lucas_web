@@ -1,0 +1,82 @@
+﻿
+<div class="bg" ng-controller="solicitudController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="wiz">
+                <div class="wiz-block" ng-repeat="item in vm.Wizard" ng-class="{'pasado' : item.cClassEstilo == 'done', 'actual' : item.cClassEstilo == 'active', 'faltante' : item.cClassEstilo == ''}">
+                    <a href="" type="button" class="btn btn-circle">{{item.nOrdenFlujo}}</a>
+                    <p>{{item.cNombreProceso}}</p>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="mensaje-estandar">
+                <h3>Ya falta poco,</h3>
+                <p>Por favor confirmar el monto de tu préstamo y hacer click en continuar</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="content-unit-2">
+                    <div class="calculo-general">
+                        <div class="slider-unidad">
+                            <h3>Préstamo</h3>
+                            <article><rzslider rz-slider-model="SliderPrestamo.value" rz-slider-options="SliderPrestamo.options"></rzslider></article>
+                            <h3>Cuotas</h3>
+                            <article><rzslider rz-slider-model="SliderCuotas.value" rz-slider-options="SliderCuotas.options"></rzslider></article>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="solicitud-resultados">
+                    <div class="resultado">
+                        <span class="numero" ng-bind="vm.ParametrosSimulacion.nPrestamo | currency: 'S/'"></span>
+                        <span class="descripcion"> Préstamo solicitado</span>
+                    </div>
+                    <div class="resultado">
+                        <span class="numero" ng-bind="vm.ParametrosSimulacion.nCuotas"></span>
+                        <span class="descripcion"> Cuotas</span>
+                    </div>
+                    <div class="resultado">
+                        <span class="numero">{{vm.ParametrosSimulacion.tem | number: 2}}%</span>
+                        <span class="descripcion"> TEM </span>
+                    </div>
+                    <div class="resultado">
+                        <span class="numero" ng-bind="vm.ParametrosSimulacion.nMontoCuota | currency: 'S/'"></span>
+                        <span class="descripcion"> Monto de Cuotas</span>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="control">
+                    <div class="col-sm-2">
+                        <small>TEA: {{vm.ParametrosSimulacion.tasaTEA}}%</small>
+                    </div>
+                    <div class="col-sm-2">
+                        <small>TCEA: {{vm.ParametrosSimulacion.tcea}}%</small>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-danger btn-block btn-anterior" ui-sref="dashboard" ui-sref-active="active">
+                            <span class="glyphicon glyphicon-triangle-left"></span> Volver
+                        </button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary btn-block" ng-click="vm.registraSolicitud()">
+                            <span class="glyphicon glyphicon-triangle-right"></span> Continuar
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+</script>

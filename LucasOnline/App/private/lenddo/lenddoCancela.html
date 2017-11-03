@@ -1,0 +1,41 @@
+﻿<div class="bg">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="welcome welcome-100 text-center">
+                <h4>Estimado usuario</h4>
+                <h3>Nos hubiera gustado que continue</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-justify">
+                <div class="felicitaciones">
+                    <p>
+                        Usted cancelo un proceso, pero si quiere volver a realizarlo solo vaya asu bandeja de préstamos y solicite uno nuevo.
+                    </p>
+                    <hr>
+                    <div class="content-unit">
+                        <h4>
+                            ¿Por qué es necesario registrar mis redes sociales?
+                        </h4>
+                        <p>
+                            Es necesario que vincule sus redes sociales para obtener un puntaje, con el cual podrá obtener un mayor préstamo.
+                        </p>
+                    </div>
+                    <div class="col-md-8 text-center col-md-offset-2">
+                        <button class="btn btn-primary btn-block" ui-sref="dashboard" ui-sref-active="active">
+                            <span class="glyphicon glyphicon-triangle-right"></span> Continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+</script>

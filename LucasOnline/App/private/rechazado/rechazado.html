@@ -1,0 +1,41 @@
+﻿<script>
+    fbq('track', 'cliente rechazado');
+</script>
+<div class="bg" ng-controller="rechazadoController as vm">
+    <div class="container contenido-nuevo tabla">
+        <div class="usuario-bienvenida">
+            <div class="welcome welcome-100 text-center">
+                <h4>Estimado usuario</h4>
+                <h3>Lo sentimos</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-justify">
+                <div class="felicitaciones">
+                    <p ng-if="!vm.ClientePEP" class="text-center">
+                        Lamento informarte que en este momento no cumples con los requisitos para aprobarte el préstamo, espero poder atenderte más adelante. 
+                    </p>
+                    <p ng-if="vm.ClientePEP" class="text-center">
+                        En esta oportunidad no podemos procesar su solicitud por ser Persona Expuesta Políticamente Expuesta.
+                    </p>
+                    <hr>
+                    <p>Para cualquier duda o consulta por favor comunícate a Aló Lucas al 01 615-7030. Así mismo, te recordamos que Lucas es parte de la familia Inversiones La Cruz. Ingresa a www.soylucas.pe para mayor información.</p>
+                    <hr />
+                    <div class="col-md-8 text-center col-md-offset-2">
+                        <button class="btn btn-primary btn-block" ui-sref="dashboard" ui-sref-active="active">
+                            <span class="glyphicon glyphicon-triangle-right"></span> Continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(this).scrollTop(0);
+    });
+
+    $(document).on('click', '.navbar-collapse.in', function (e) { if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') { $(this).collapse('hide'); } });
+</script>
